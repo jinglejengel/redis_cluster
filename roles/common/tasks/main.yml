@@ -1,6 +1,6 @@
 ---
 - name: Ensure required packages are installed
-  apt: name={{ item }} state=present
+  apt: name={{ item }} state=present update_cache=yes
   with_items:
     - build-essentials
     - ruby
