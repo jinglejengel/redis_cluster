@@ -1,0 +1,9 @@
+---
+- name: Install redis ruby gem for redis-trib.rb
+  gem: name=redis state=latest
+
+- name: Create initialization script
+  template: src=initialize_cluster.j2 dest=/root/initialize_cluster.sh
+
+- name: Initialize cluster
+  shell: bash /root/initialize_cluster.sh
