@@ -1,5 +1,5 @@
 ---
- - name: Ensure required packages are installed
+- name: Ensure required packages are installed
   apt: name={{ item }} state=present
   with_items:
     - build-essentials
