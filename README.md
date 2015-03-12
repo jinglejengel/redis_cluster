@@ -1,8 +1,7 @@
 Install ansible on a node of your choice (this is assuming all centos for the time being):
 
 ```
-apt-get update
-apt-get install ansible sshpass
+yum install ansible sshpass
 ```
 
 Edit the hosts.yml file, and ensure your key exists across all nodes (coming soon, this code will add it all for you), then simply run:
