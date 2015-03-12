@@ -30,7 +30,7 @@ Plans:
   - This will allow you to spin up a dynamic cluster without having to go in and tune specific files
 - Automated node creation for RAX cloud server (Maybe AWS)
 - Automated SSH keys
-- Ubuntu support alongside CentOS
+- Ubuntu support alongside CentOS (Ubuntu Branch available however under branches)
  
 
 PRs welcome (and encouraged)!
