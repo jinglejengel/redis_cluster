@@ -1,10 +1,8 @@
 ---
-- name: Install development tools
-  yum: name="@Development tools" state=present 
-
-- name: Ensure required packages are installed
-  yum: name={{ item }} state=present
+ - name: Ensure required packages are installed
+  apt: name={{ item }} state=present
   with_items:
+    - build-essentials
     - ruby
     - rubygems
     - vim
@@ -30,10 +28,10 @@
 - name: Make install redis bins
   shell: make install chdir=~/redis-3.0.0-rc4/
 
-- name: Open up port 6379 on iptables
+- name: Open up port 6379 on iptables (Keeping in for Ubuntu)
   shell: iptables -I INPUT -p tcp --dport 6379 -j ACCEPT; service iptables save; service iptables reload
 
-- name: Open up port 16379 on iptables
+- name: Open up port 6379 on iptables (Keeping in for Ubuntu)
   shell: iptables -I INPUT -p tcp --dport 16379 -j ACCEPT; service iptables save; service iptables reload
 
 - name: Start redis
