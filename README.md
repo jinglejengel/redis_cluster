@@ -1,4 +1,4 @@
-Install ansible on a node of your choice (this is assuming all centos for the time being):
+Install ansible on a node of your choice (This is for CentOS, Ubuntu branch is available):
 
 ```
 yum install ansible sshpass
