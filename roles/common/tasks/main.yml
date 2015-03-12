@@ -22,10 +22,10 @@
   file: path=/var/lib/redis owner=root group=root mode=0655 state=directory
 
 - name: Place the redis files on each server
-  get_url: url=https://github.com/antirez/redis/archive/3.0.0-rc4.tar.gz dest=~
+  get_url: url=https://github.com/antirez/redis/archive/3.0.0-rc4.tar.gz dest=/root/3.0.0-rc4.tar.gz
 
 - name: Untar redis files
-  unarchive: src=/root/3.0.0-rc4.tar.gz dest=~
+  unarchive: src=/root/3.0.0-rc4.tar.gz dest=/root/
 
 - name: Make install redis bins
   shell: make install chdir=~/redis-3.0.0-rc4/
