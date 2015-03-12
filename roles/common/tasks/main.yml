@@ -1,10 +1,12 @@
 ---
+- name: Install python apt... Hell yeah ubuntu
+  shell: apt-get update; apt-get install python-apt -y
+
 - name: Ensure required packages are installed
-  apt: name={{ item }} state=present update_cache=yes
+  apt: name={{ item }} state=present
   with_items:
-    - build-essentials
+    - build-essential
     - ruby
-    - rubygems
     - vim
 
 - name: Copy SSH key from master node to all hosts
@@ -20,19 +22,19 @@
   file: path=/var/lib/redis owner=root group=root mode=0655 state=directory
 
 - name: Place the redis files on each server
-  get_url: url=https://github.com/antirez/redis/archive/3.0.0-rc4.tar.gz dest=~
+  get_url: url=https://github.com/antirez/redis/archive/3.0.0-rc4.tar.gz dest=/root/3.0.0-rc4.tar.gz validate_certs=no
 
 - name: Untar redis files
-  unarchive: src=/root/3.0.0-rc4.tar.gz dest=~
+  unarchive: src=/root/3.0.0-rc4.tar.gz dest=/root/
 
 - name: Make install redis bins
   shell: make install chdir=~/redis-3.0.0-rc4/
 
-- name: Open up port 6379 on iptables (Keeping in for Ubuntu)
-  shell: iptables -I INPUT -p tcp --dport 6379 -j ACCEPT; service iptables save; service iptables reload
+- name: Open port 6379
+  ufw: rule=allow port=6379 proto=tcp
 
-- name: Open up port 6379 on iptables (Keeping in for Ubuntu)
-  shell: iptables -I INPUT -p tcp --dport 16379 -j ACCEPT; service iptables save; service iptables reload
+- name: open port 16379
+  ufw: rule=allow port=16379 proto=tcp
 
 - name: Start redis
   command: redis-server /etc/redis.conf
