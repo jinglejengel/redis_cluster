@@ -1,8 +1,10 @@
-Install ansible on a node of your choice (this is assuming all centos for the time being):
+Install ansible on a node of your choice (This is the *UBUNTU* branch):
 
 ```
-apt-get update
-apt install ansible sshpass
+sudo apt-get install software-properties-common
+sudo apt-add-repository ppa:ansible/ansible
+sudo apt-get update
+sudo apt-get install ansible sshpass
 ```
 
 Edit the hosts.yml file, and ensure your key exists across all nodes (coming soon, this code will add it all for you), then simply run:
@@ -31,7 +33,7 @@ Plans:
   - This will allow you to spin up a dynamic cluster without having to go in and tune specific files
 - Automated node creation for RAX cloud server (Maybe AWS)
 - Automated SSH keys
-- Ubuntu support alongside CentOS (This branch)
+- Ubuntu support alongside CentOS (This branch is the start)
  
 
 PRs welcome (and encouraged)!
