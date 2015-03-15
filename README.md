@@ -4,7 +4,22 @@ Install ansible on a node of your choice (This is for CentOS, Ubuntu branch is a
 yum install ansible sshpass
 ```
 
-Edit the hosts.yml file, and ensure your key exists across all nodes (coming soon, this code will add it all for you), then simply run:
+This branch deploys a number of RAX cloud servers specified in group_vars/site.yml. You can specify the number of replicas you want per shard, and the total number of shards you'd like. This determines how many total servers are created.
+
+i.e. If I wanted 3 shards, with 1 replica each, this would create 6 total servers.
+
+In order to do this, you'll need to ensure you have your RAX cloud credentials in ~/.raxpub, and example of that looks like this:
+
+```
+#Example .raxpub file:
+[rackspace_cloud]
+username = myclouduser
+api_key = XXXXXXXXXXXXXX
+```
+
+As well, you'll want to ensure the server you're running the playbook from has a key uploaded to your available RAX public keys, as this will make your life a lot easier to run this playbook.
+
+Once you have that configured simply run:
 
 ```
 ansible-playbook -i hosts.yml site.yml
@@ -24,12 +39,6 @@ e700ec4b18f65f88760dc03a3242c63dfcbeddbe 10.209.70.123:6379 slave b64ffb6cdc58c6
 
 Plans:
 
-- Add variables to specify:
-  - Number of replicas
-  - Number of shards
-  - This will allow you to spin up a dynamic cluster without having to go in and tune specific files
-- Automated node creation for RAX cloud server (Maybe AWS)
-- Automated SSH keys
 - Ubuntu support alongside CentOS (Ubuntu Branch available however under branches)
  
 
