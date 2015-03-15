@@ -1,0 +1,18 @@
+---
+# Location of your creds file
+creds_file: ~/.raxpub
+
+# Your Rackspace flavour
+rax_flavour: performance1-1
+
+# Your Rackspace image (By default CentOS 6.5)
+rax_image: 189678ca-fe2c-4b7a-a986-30c3660edfa5
+
+# Name of your Rackspace pub key
+rax_key: your_keypair_name
+
+# Number of replicas
+num_slaves: 1
+
+# Number of shards
+num_shards: 3
