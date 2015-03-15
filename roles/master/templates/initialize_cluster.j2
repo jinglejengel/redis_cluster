@@ -3,7 +3,7 @@
 host_string=""
 
 {% for host in groups['all'] %}
-host_string="$host_string {{ hostvars[host]['inventory_hostname'] }}:6379"
+host_string="$host_string {{ hostvars[host]["ansible_eth1"]["ipv4"]["address"] }}:6379"
 {% endfor %}
 
 
