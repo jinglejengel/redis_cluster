@@ -1,17 +1,75 @@
 ---
-- name: Generate SSH key on master host
-  hosts: master
+- name: Build Servers
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars_files:
+    - group_vars/main.yml
+
   tasks:
-    - command: /usr/bin/ssh-keygen -f /root/.ssh/id_rsa -q -N '' creates=/root/.ssh/id_rsa
+    - name: Build your master
+      local_action:
+        module: rax
+        region: IAD
+        credentials: "{{ creds_file }}"
+        name: redis_cluster_node%01d
+        flavor: "{{ rax_flavour }}"
+        image: "{{ rax_image }}"
+        state: present
+        key_name: "{{ rax_key }}"
+        count: 1
+        count_offset: 1
+        exact_count: yes
+        group: redismaster
+        wait: yes
+      register: rax
+
+    - name: Add the instances to the group 'redismaster'
+      local_action:
+        module: add_host
+        hostname: "{{ item.name }}"
+        ansible_ssh_host: "{{ item.rax_accessipv4 }}"
+        ansible_ssh_user: root
+        groupname: redismaster
+      with_items: rax.success
+      when: rax.action == 'create'
+
+    - name: Build your slaves
+      local_action:
+        module: rax
+        region: IAD
+        credentials: "{{ creds_file }}"
+        name: redis_cluster_node%01d
+        flavor: "{{ rax_flavour }}"
+        image: "{{ rax_image }}"
+        state: present
+        key_name: "{{ rax_key }}"
+        count: "{{ (num_shards * ( num_slaves + 1)) - 1 }}"
+        count_offset: 2
+        exact_count: yes
+        group: redisslaves
+        wait: yes
+      register: rax
+
+    - name: Add the instances to the group 'redisslaves'
+      local_action:
+        module: add_host
+        hostname: "{{ item.name }}"
+        ansible_ssh_host: "{{ item.rax_accessipv4 }}"
+        ansible_ssh_user: root
+        groupname: redisslaves
+      with_items: rax.success
+      when: rax.action == 'create'
 
 - name: Configure common things
-  hosts: all
+  hosts: all:!localhost
   user: root
   roles:
     - roles/common
 
 - name: Configure master node
-  hosts: master
+  hosts: redismaster
   user: root
   roles:
     - roles/master
