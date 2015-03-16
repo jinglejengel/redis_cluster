@@ -9,9 +9,6 @@
     - rubygems
     - vim
 
-- name: Copy SSH key from master node to all hosts
-  authorized_key: user=root key="{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
-
 - name: Place the redis.conf file on all hosts
   copy: src=redis.conf dest=/etc/redis.conf
 
