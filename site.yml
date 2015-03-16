@@ -1,9 +1,4 @@
 ---
-- name: Generate SSH key on master host
-  hosts: master
-  tasks:
-    - command: /usr/bin/ssh-keygen -f /root/.ssh/id_rsa -q -N '' creates=/root/.ssh/id_rsa
-
 - name: Configure common things
   hosts: all
   user: root
