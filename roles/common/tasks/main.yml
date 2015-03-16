@@ -9,9 +9,6 @@
     - ruby
     - vim
 
-- name: Copy SSH key from master node to all hosts
-  authorized_key: user=root key="{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
-
 - name: Place the redis.conf file on all hosts
   copy: src=redis.conf dest=/etc/redis.conf
 
@@ -28,7 +25,7 @@
   unarchive: src=/root/3.0.0-rc4.tar.gz dest=/root/
 
 - name: Make install redis bins
-  shell: make install chdir=~/redis-3.0.0-rc4/
+  shell: make install chdir=/root/redis-3.0.0-rc4/
 
 - name: Open port 6379
   ufw: rule=allow port=6379 proto=tcp
