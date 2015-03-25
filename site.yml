@@ -65,11 +65,15 @@
 - name: Configure common things
   hosts: all:!localhost
   user: root
+  vars_files:
+    - group_vars/main.yml
   roles:
     - roles/common
 
 - name: Configure master node
   hosts: redismaster
   user: root
+  vars_files:
+    - group_vars/main.yml
   roles:
     - roles/master
