@@ -65,6 +65,7 @@
 - name: Configure common things
   hosts: all:!localhost
   user: root
+  gather_facts:true
   vars_files:
     - group_vars/main.yml
   roles:
@@ -73,6 +74,7 @@
 - name: Configure master node
   hosts: redismaster
   user: root
+  gather_facts:true
   vars_files:
     - group_vars/main.yml
   roles:
