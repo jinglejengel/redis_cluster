@@ -1,4 +1,5 @@
 #!/bin/bash
 
 host_string="{% for host in groups['all'] %}{% if hostvars[host]['inventory_hostname'] != "localhost" %}{{ hostvars[host]['ansible_eth1']['ipv4']['address'] }}:6379 {% endif %}{% endfor %}"
-yes 'yes' | /root/redis-3.0.0-rc4/src/redis-trib.rb create --replicas {{ num_slaves }} $host_string
+
+yes 'yes' | /root/redis-3.0.0-rc6/src/redis-trib.rb create --replicas {{ num_slaves }} $host_string
