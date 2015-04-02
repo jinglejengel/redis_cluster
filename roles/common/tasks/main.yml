@@ -19,13 +19,13 @@
   file: path=/var/lib/redis owner=root group=root mode=0655 state=directory
 
 - name: Place the redis files on each server
-  get_url: url=https://github.com/antirez/redis/archive/3.0.0-rc6.tar.gz dest=/root/3.0.0-rc6.tar.gz
+  get_url: url=http://download.redis.io/releases/redis-3.0.0.tar.gz dest=/root/redis-3.0.0.tar.gz
 
 - name: Untar redis files
-  unarchive: src=/root/3.0.0-rc6.tar.gz dest=/root/ copy=no
+  unarchive: src=/root/redis-3.0.0.tar.gz dest=/root/ copy=no
 
 - name: Make install redis bins
-  shell: make install chdir=/root/redis-3.0.0-rc6/
+  shell: make install chdir=/root/redis-3.0.0/
 
 - name: Open up port 6379 on iptables
   shell: iptables -I INPUT -p tcp --dport 6379 -j ACCEPT; service iptables save; service iptables reload
